@@ -3,28 +3,43 @@
 {% block page %} {{ current_user.username }}'s' Todo{% endblock %}
 
 {% block link%}
-    <ul id="nav-mobile" class="right">
-        <li><a href="/logout">Logout</a></li>
-    </ul>
+<ul class="collection " id="result">
+  {% for todo in current_user.todos %}
+  <li class="collection-item">
+    <form class="row" method="POST" action="toggle/{{todo.id}}">
+      <span class="card-title">{{todo.text}}
+        <label class="right">
+          <input type="checkbox" name="done" onchange="this.form.submit()" {% if todo.done %} checked {% endif %} />
+          <span>Done</span>
+        </label>
+      </span>
+    </form>
+    <div class="row">
+      <a href="/editTodo/{{todo.id}}">EDIT</a>
+      <a href="/deleteTodo/{{todo.id}}">DELETE</a>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
 {% endblock %}
 
 {% block styles %}
-  div.card{
-    margin:0;
-  }
+div.card{
+margin:0;
+}
 
-  #result{
-    margin-top:10px;
-    height: 40vh;
-    overflow-y: scroll;
-  }
+#result{
+margin-top:10px;
+height: 40vh;
+overflow-y: scroll;
+}
 
-  .card{
-    height: 265px;
-    padding-top: 50px;
-  }
+.card{
+height: 265px;
+padding-top: 50px;
+}
 
 {% endblock %}
 
-{% block content %} 
+{% block content %}
 {% endblock %}
